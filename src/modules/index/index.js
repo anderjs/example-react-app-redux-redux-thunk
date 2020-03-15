@@ -5,7 +5,7 @@ const Index = () => {
   return (
     <React.Fragment>
       <Terminal 
-        inputStr="Hola"
+        
       />
     </React.Fragment>
   )
