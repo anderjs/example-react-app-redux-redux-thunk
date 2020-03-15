@@ -18,11 +18,12 @@ const App = () => {
   }), [state, dispatch])
 
   return (
-    <Router>
-      <Store.Provider value={context}>
+    <Store.Provider value={context}>
+      <Router>
         <Index path="/" />
-      </Store.Provider>
-    </Router>
+      </Router>
+    </Store.Provider>
+
   )
 }
 
