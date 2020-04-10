@@ -1,5 +1,5 @@
 import * as event from "../actions/types";
-import { applyFilter, applySumOverCounters } from "utils";
+import { applyFilter, applySumOverCounters, deleteItemFromCounter } from "utils";
 
 const initialState = {
   counters: [{
@@ -12,9 +12,11 @@ const initialState = {
     title: "Anderson"
   }],
   errors: {
+    onDelete: null,
     onCreate: null
   },
   loading: {
+    onDelete: false,
     onCreate: false
   },
   total: 0
@@ -68,6 +70,12 @@ function counterReducer(state = initialState, action) {
       return {
         ...state,
         total: applySumOverCounters(state.counters)
+      }
+
+    case event.ON_DELETE_COUNTER:
+      return {
+        ...state,
+        counters: deleteItemFromCounter(state.counters, action.payload)
       }
 
     default:

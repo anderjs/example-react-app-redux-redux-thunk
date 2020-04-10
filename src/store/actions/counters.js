@@ -11,6 +11,10 @@ export const onCreateCounter = ({ title }) => async dispatch => {
     userId: 1
   }
 
+
+  /**
+   * Siempre hacer ON_START_...ACCION para crear efectos UI/UIX con los spinners.
+   */
   dispatch({ type: event.ON_START_CREATE_COUNTER })
 
   try {
@@ -60,4 +64,29 @@ export const onSumCounters = () => dispatch => {
   return dispatch({
     type: event.ON_SUM_COUNTERS
   })
+}
+
+
+/**
+ * @param {{ id?: number }} param
+ */
+export const onDeleteCounter = ({ id }) => async dispatch => {
+  /**
+   * Evento para cuando empieze a cargar.
+   */
+  try {
+    await httpClient({
+      externalHost: 'https://jsonplaceholder.typicode.com/posts/'.concat(id),
+      method: 'DELETE'
+    })
+
+    return dispatch({
+      type: event.ON_DELETE_COUNTER,
+      payload: id 
+    })
+  } catch (err) {
+    /**
+     * Por si falla
+     */
+  }
 }

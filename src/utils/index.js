@@ -27,8 +27,18 @@ export function applyFilter([...counters], type) {
 /**
  * @param {[]} counters
  */
-export function applySumOverCounters([...counters]) {
+export function applySumOverCounters(counters) {
   return counters.reduce((previous, next) => {
     return previous + next.count 
   }, 0)
+}
+
+/**
+ * 
+ * @param {[]} counters 
+ * @param {number} id 
+ */
+export function deleteItemFromCounter (counters, id) {
+  console.log(id)
+  return counters.filter((item) => item.id !== id)
 }
