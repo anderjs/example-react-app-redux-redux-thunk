@@ -40,3 +40,24 @@ export const onCreateCounter = ({ title }) => async dispatch => {
     })
   }
 }
+
+
+/**
+ * @param {'count' | 'title'} filterType
+ */
+export const onApplyFilter = (filterType) => dispatch => {
+  return dispatch({
+    type: event.ON_APPLY_FILTER,
+    payload: filterType
+  })
+} 
+
+
+/**
+ * Aplicar suma.
+ */
+export const onSumCounters = () => dispatch => {
+  return dispatch({
+    type: event.ON_SUM_COUNTERS
+  })
+}

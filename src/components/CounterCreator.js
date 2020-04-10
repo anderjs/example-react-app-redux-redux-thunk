@@ -5,7 +5,6 @@ const CounterCreator = ({ onSubmit }) => {
 
   const [title, setTitle] = useState('')
 
-
   const onChangeTitle = useCallback(e => {
     setTitle(e.target.value)
   }, [])

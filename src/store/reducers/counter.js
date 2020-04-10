@@ -1,24 +1,23 @@
 import * as event from "../actions/types";
+import { applyFilter, applySumOverCounters } from "utils";
 
 const initialState = {
-  counters: [
-    {
-      id: "x1x1",
-      title: "Jorge",
-      count: 0,
-    },
-    {
-      id: "x2x2",
-      title: "Anderson",
-      count: 2,
-    },
-  ],
+  counters: [{
+    count: 0,
+    id: "x1x1",
+    title: "Jorge"
+  }, {
+    count: 2,
+    id: "x2x2",
+    title: "Anderson"
+  }],
   errors: {
     onCreate: null
   },
   loading: {
-    onCreate: false,
+    onCreate: false
   },
+  total: 0
 };
 
 /**
@@ -42,7 +41,7 @@ function counterReducer(state = initialState, action) {
         ...state,
         loading: {
           ...state.loading,
-          onCreate: true
+          onCreate: true,
         }
       };
 
@@ -57,6 +56,18 @@ function counterReducer(state = initialState, action) {
           ...state.loading,
           onCreate: false
         }
+      }
+
+    case event.ON_APPLY_FILTER:
+      return {
+        ...state,
+        counters: applyFilter(state.counters, action.payload)
+      }
+
+    case event.ON_SUM_COUNTERS:
+      return {
+        ...state,
+        total: applySumOverCounters(state.counters)
       }
 
     default:
