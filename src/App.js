@@ -1,29 +1,38 @@
-import React, { memo, useReducer, useMemo } from 'react'
-import { Router } from '@reach/router'
+import React, { useCallback, memo } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
-import Index from './modules/index'
-import { Store, initialState } from './store'
-import AppReducer from './store/reducer'
+import CounterCreator from './components/CounterCreator'
+import CounterItem from './components/CounterItem'
+
+import * as action from './store/actions/counters'
+
 
 const App = () => {
-  const [state, dispatch] = useReducer(AppReducer, initialState)
+  const state = useSelector(state => state.counters)
+
+  console.log("state", state)
+
+  const dispatch = useDispatch()
 
   /**
-   * @description
-   * Memoization of global state.
+   * Agregando nuevo contador.
    */
-  const context = useMemo(() => ({
-    dispatch,
-    state
-  }), [state, dispatch])
+  const handleCreateCounter = useCallback(counter => {
+    dispatch(action.onCreateCounter(counter))
+  }, [dispatch])
 
   return (
-    <Store.Provider value={context}>
-      <Router>
-        <Index path="/" />
-      </Router>
-    </Store.Provider>
-
+    <React.Fragment>
+      <CounterCreator onSubmit={handleCreateCounter} />
+      {state.loading.onCreate && (
+        <h3>Creando contador....</h3>
+      )}
+      <br /><br />
+      {state.counters.map(counter => (
+        /** AQUI VA A ID en el key */
+        <CounterItem key={counter.title} title={counter.title} count={counter.count} />
+      ))}
+     </React.Fragment>
   )
 }
 

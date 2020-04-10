@@ -1,11 +1,17 @@
-import { createContext } from 'react'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 
-import users from './data/users'
+import rootReducer from './reducers'
 
-export const initialState = {
-  users
-}
+const middlewares = [thunk]
 
-export const Store = createContext({
-  ...initialState
-})
+const initialState = {}
+
+const store = createStore(
+  rootReducer,
+  initialState,
+  applyMiddleware(...middlewares)
+)
+
+
+export default store
